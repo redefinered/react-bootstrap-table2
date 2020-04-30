@@ -30,7 +30,27 @@ class BootstrapTable extends PropsBaseResolver(Component) {
 
   // Exposed APIs
   getData = () => {
-    return this.visibleRows();
+    // return this.visibleRows();
+    const { _filter, _concat } = this.props;
+    let rows = this.visibleRows();
+    let completeRows = _filter(rows, d => {
+      return (
+        d.zerodate !== null &&
+        d.useSafetyStock !== null &&
+        d.week_on_hand !== 99999 &&
+        d.averageSales > 0
+      );
+    });
+    let incompleteRows = _filter(rows, d => {
+      return (
+        d.zerodate === null ||
+        d.useSafetyStock === null ||
+        d.week_on_hand === 99999 ||
+        d.averageSales <= 0
+      );
+    });
+    let newRow = _concat(completeRows, incompleteRows);
+    return newRow;
   }
 
   render() {
