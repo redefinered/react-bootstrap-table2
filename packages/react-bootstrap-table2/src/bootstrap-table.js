@@ -32,8 +32,8 @@ class BootstrapTable extends PropsBaseResolver(Component) {
   getData = () => {
     // return this.visibleRows();
     const { _filter, _concat } = this.props;
-    let rows = this.visibleRows();
-    let completeRows = _filter(rows, d => {
+    const rows = this.visibleRows();
+    const completeRows = _filter(rows, (d) => {
       return (
         d.zerodate !== null &&
         d.useSafetyStock !== null &&
@@ -41,7 +41,7 @@ class BootstrapTable extends PropsBaseResolver(Component) {
         d.averageSales > 0
       );
     });
-    let incompleteRows = _filter(rows, d => {
+    const incompleteRows = _filter(rows, (d) => {
       return (
         d.zerodate === null ||
         d.useSafetyStock === null ||
@@ -49,7 +49,7 @@ class BootstrapTable extends PropsBaseResolver(Component) {
         d.averageSales <= 0
       );
     });
-    let newRow = _concat(completeRows, incompleteRows);
+    const newRow = _concat(completeRows, incompleteRows);
     return newRow;
   }
 
